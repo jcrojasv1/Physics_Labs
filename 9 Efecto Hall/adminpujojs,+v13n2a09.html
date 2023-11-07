@@ -1,0 +1,520 @@
+
+<html>
+
+<head>
+<title></title>
+</head>
+
+<body>
+
+<font size="2" face="verdana">
+
+<p align="center"><font size="4"><b>Unidad para supervisi&oacute;n y control de
+medici&oacute;n de efecto hall con labview</b>&reg;</font></p>
+
+<p align="center"><font size="3"><b>Unit for monitoring and controlling
+the hall effect using labview</b>&reg;</font></p>
+
+<p><center>Hern&aacute;n Rodr&iacute;guez, L. Camilo Jim&eacute;nez</center></p>
+
+<br>
+
+<p><center><i>Grupo de Pel&iacute;culas Delgadas<br>
+Departamento de F&iacute;sica, Facultad de Ciencias<br>
+Pontificia Universidad Javeriana. Cra. 7 No. 43-82 Bogot&aacute;, Colombia<br>
+<a href="mailto:rodr&iacute;guez.hernan@javeriana.edu.co">rodr&iacute;guez.hernan@javeriana.edu.co</a>, <a href="mailto:cjimenez@javeriana.edu.co">cjimenez@javeriana.edu.co</a></i></p>
+
+<p>Recibido: 03-12-2007: Aceptado: 14-10-2008:</center></p>
+
+<hr>
+
+<p><font size="3"><b>Resumen</b></font></p>
+
+<p>Se implement&oacute; una unidad para la medici&oacute;n de conductividad el&eacute;ctrica y efecto Hall, que permite determinar
+propiedades de transporte en pel&iacute;culas met&aacute;licas y semiconductoras, tipo de portadores mayoritarios, su concentraci&oacute;n
+y su movilidad, a partir de la medici&oacute;n del voltaje Hall y la corriente. Es claro que para los metales el tipo de
+portadores son electrones, sin embargo ciertos metales como aluminio, zinc y cadmio entre otros, muestran un
+comportamiento que cl&aacute;sicamente ser&iacute;a atribuible a portadores de carga positivos (huecos). En el presente trabajo
+se discuten medidas de efecto Hall en dos tipos de materiales: cobre (Cu) y zinc (Zn). El resultado de las mediciones
+muestran que el cobre tiene un coeficiente Hall negativo RH = - (0.28 &plusmn; 0.01)×10<sup>-10</sup> m<sup>3</sup>/C, mientras que el zinc tiene
+uno positivo RH = + (4.2 &plusmn; 0.2)×10<sup>-11</sup> m<sup>3</sup>/C. Estos resultados son acordes con valores reportados en la literatura.
+En la mayor&iacute;a de textos de f&iacute;sica del estado s&oacute;lido no se menciona expl&iacute;citamente la raz&oacute;n por la cual hay metales
+que muestran coeficiente Hall positivo. En este trabajo se discute este fen&oacute;meno por medio de sus estructuras de
+bandas.</p>
+
+<p><b>Palabras clave</b>: Efecto Hall, semiconductor, metal, LabVIEW.<p>
+
+<hr>
+
+<p><font size="3"><b>Abstract</b></font></p>
+
+<p>We assembled a Hall effect and electric conductivity measuring unit that allows the determination of transport
+properties in semiconductor and metal films, including the type and concentration of majority carriers and their
+mobility, from measurements of Hall voltage and current. It is clear that electrons are the charge carrier in metals,
+however some metals such as aluminum, zinc and cadmium among others exhibit a behavior that, according to the
+classical view, should be positive charge carriers (holes). In this paper we discuss Hall effect measurements in two
+types of materials: copper (Cu) and zinc (Zn). Results from measurements show that copper has a negative Hall
+coefficient RH = - (0.28 &plusmn; 0.01)×10<sup>-10</sup> m<sup>3</sup>/C and zinc has a positive coefficient RH = + (4.2 &plusmn; 0.2)×10<sup>-11</sup> m<sup>3</sup>/C. Our
+results agree with those reported in the scientific literature. Most of the textbooks on solid state physics do not
+mention explicitly the reason why some metals show a positive Hall coefficient. We discuss this fact based on their
+band structures.</p>
+
+<p><b>Key words</b>: Hall effect, semiconductor, metal, LabVIEW.</p>
+
+<hr>
+
+<p><font size="3"><b>INTRODUCCI&Oacute;N</b></font></p>
+
+<p>La caracterizaci&oacute;n de materiales por efecto Hall, es una
+t&eacute;cnica ampliamente utilizada para determinar propiedades
+el&eacute;ctricas como concentraci&oacute;n de portadores, tipo de
+portador, movilidad etc., en metales y semiconductores.</p>
+
+<p>En este trabajo se implement&oacute; esta t&eacute;cnica para medir el
+efecto Hall sobre muestras met&aacute;licas con tama&ntilde;os del orden
+de cm<sup>2</sup>. La supervisi&oacute;n y control de par&aacute;metros de
+trabajo, se hizo mediante un sistema de adquisici&oacute;n de
+datos a trav&eacute;s de una tarjeta de comunicaci&oacute;n IEEE-488
+que permite la comunicaci&oacute;n entre los instrumentos de
+medici&oacute;n, una fuente de corriente y un computador. Estos
+instrumentos tienen interfaces de comunicaci&oacute;n GPIB (general
+purpose interface bus). La comunicaci&oacute;n permite la
+lectura de los par&aacute;metros de medici&oacute;n y el control de la
+fuente de corriente Hall. La supervisi&oacute;n y control con el
+PC se hace con una interfaz en LabVIEW a trav&eacute;s de m&oacute;dulos
+de acondicionamiento de se&ntilde;al de National Instruments
+colocados en un chasis NI-SC 2342 para conversi&oacute;n an&aacute;loga
+a digital.</p>
+
+<p><font size="3"><b>DESCRIPCI&Oacute;N DE LA T&Eacute;CNICA DE EFECTO HALL</b></font></p>
+
+<p>La corriente el&eacute;ctrica <i>i</i> es el movimiento de portadores de
+carga (electrones o huecos) en una direcci&oacute;n preferencial
+dentro de un material, ya sea conductor o semiconductor
+por la acci&oacute;n de un campo el&eacute;ctrico externo. Estos portadores
+de carga experimentan una fuerza el&eacute;ctrica <img src="img/revistas/unsc/v13n2/v13n2a09img1.jpg">,
+donde <i>q</i> es la carga y <img src="img/revistas/unsc/v13n2/v13n2a09img2.jpg">es el campo el&eacute;ctrico aplicado a la
+muestra por una fuente de corriente externa.</p>
+
+<p>Como se observa en la <a href="#fig1">Figura 1</a>, si el conductor se encuentra
+en presencia de un campo magn&eacute;tico externo <img src="img/revistas/unsc/v13n2/v13n2a09img4.jpg">perpendicular
+a la direcci&oacute;n de la corriente, los portadores de
+carga experimentan una desviaci&oacute;n perpendicular a sus
+trayectorias debido a la fuerza de Lorentz <img src="img/revistas/unsc/v13n2/v13n2a09img5.jpg">Como resultado de esta desviaci&oacute;n de los portadores, se
+produce una acumulaci&oacute;n de carga hacia los lados del conductor
+creando un voltaje transversal a la direcci&oacute;n de la
+corriente, conocido como voltaje Hall <i>U<sub>H</sub></i> (Kittel, 1996;
+Ashcroft y Mermin, 1976; Pierret, 1994).</p>
+
+<p><center><a name="fig1"><img src="img/revistas/unsc/v13n2/v13n2a09f1.jpg"></center></p>
+
+<p>El voltaje Hall <i>U<sub>H</sub></i> depende del tipo de material, de la geometr&iacute;a
+de la muestra y de par&aacute;metros f&iacute;sicos ajustables como
+la corriente i que circula por la muestra y la magnitud del
+campo magn&eacute;tico <img src="img/revistas/unsc/v13n2/v13n2a09img6.jpg">. La expresi&oacute;n correspondiente es:</p>
+
+<p>donde <img src="img/revistas/unsc/v13n2/v13n2a09img3.jpg"> es la constante Hall que depende de la
+concentraci&oacute;n de portadores <i>&eta;</i> con carga <i>q</i> y <i>d</i> corresponde
+al espesor de la muestra.</p>
+
+<p>De la <a href="#for1">ecuaci&oacute;n 1</a> se puede notar que el voltaje Hall es
+inversamente proporcional a la concentraci&oacute;n de portadores,
+por otro lado el signo de <i>R<sub>H</sub></i> depende del signo de <i>q</i>. De
+aqu&iacute; se ve su importancia en la medici&oacute;n del efecto Hall.
+Determinando la constante Hall pueden hallarse no s&oacute;lo la
+concentraci&oacute;n de portadores y el tipo de portador mayoritario
+que tiene la muestra, sino tambi&eacute;n se pueden identificar
+mecanismos de conducci&oacute;n. Estudiando las variaciones
+de la concentraci&oacute;n de portadores en funci&oacute;n de la temperatura,
+puede determinarse, para el caso de materiales
+semiconductores, mecanismos de conducci&oacute;n intr&iacute;nsecos
+o extr&iacute;nsecos (Streetman y Banerjee, 2006).</p>
+
+<p><center><a name="for1"><img src="img/revistas/unsc/v13n2/v13n2a09for1.jpg"></center></p>
+
+<p><font size="3"><b>DETALLES EXPERIMENTALES</b></font></p>
+
+<p>Cuando se caracteriza una muestra por efecto Hall se miden
+principalmente los siguientes par&aacute;metros f&iacute;sicos: voltaje
+Hall, corriente a trav&eacute;s de la muestra, campo magn&eacute;tico
+externo y temperatura de la muestra. La <a href="#fig2">Figura 2</a> ilustra la
+forma en que se realizan las mediciones.</p>
+
+<p><center><a name="fig2"><img src="img/revistas/unsc/v13n2/v13n2a09f2.jpg"></center></p>
+
+<p>La muestra (M) se coloca sobre un portamuestra (PM) en
+medio de un campo magn&eacute;tico %
+U
+producido por dos bobinas
+coaxiales (L<sub>B</sub>) alimentadas con una fuente de corriente
+(I<sub>s2</sub>). Para localizar el campo sobre la muestra se introducen
+unos n&uacute;cleos de hierro cil&iacute;ndricos con extremos c&oacute;nicos
+m&oacute;viles en medio de las bobinas. La medici&oacute;n de <img src="img/revistas/unsc/v13n2/v13n2a09img4.jpg">
+se
+hace con una sonda Hall (SH) y un tesl&aacute;metro (Tm). La
+corriente sobre la muestra i se mide con un amper&iacute;metro
+DC (I<sub>s1</sub>) y el voltaje Hall se mide con nanovolt&iacute;metro (nV).
+Si adicionalmente se desea estimar la conductividad de la
+muestra por el m&eacute;todo de 4 sondas, puede medirse la ca&iacute;da
+de potencial en direcci&oacute;n del flujo de la corriente (voltaje
+longitudinal).</p>
+
+<p>El voltaje Hall es una funci&oacute;n de varias variables <i>U<sub>H</sub></i> (<i>I, B,
+T</i>,...), por ello se debe desarrollar un algoritmo que permita
+estudiar la dependencia del voltaje Hall con las diferentes
+variables. Para el caso particular se ha estudiado la dependencia
+de <i>U<sub>H</sub></i> en funci&oacute;n de la corriente de la muestra a
+temperatura y campo magn&eacute;tico constantes. La rutina que
+se ha desarrollado se ilustra en el diagrama de bloques que
+aparece en la <a href="#fig3">figura 3</a>.</p>
+
+<p><center><a name="fig3"><img src="img/revistas/unsc/v13n2/v13n2a09f3.jpg"></center></p>
+
+<p>Los par&aacute;metros de entrada son: la corriente m&aacute;xima permitida
+que circula por la muestra <i>imax</i>, el incremento en corriente
+&Delta;<i>i</i> y el tiempo de espera <i>t</i>. La corriente <i>imax</i> se
+multiplica por -<i>1</i> y se incrementa en un valor &Delta;<i>i</i>. Este nuevo
+valor de corriente circula por la muestra, despu&eacute;s se
+presenta un tiempo de espera <i>t</i> para asegurar condiciones
+de equilibrio, enseguida se produce la captura de datos
+correspondientes a la lectura de la corriente aplicada (read
+current source) y la lectura del voltaje Hall (read voltmeter).
+Una vez le&iacute;dos los datos <i>U<sub>j</sub>, I<sub>j</sub></i>, estos datos se almacenan y
+grafican. Si el valor absoluto de la corriente que circula
+por la muestra es inferior al valor m&aacute;ximo de corriente
+permitida, entonces el programa incrementa el valor de la
+corriente que circular&aacute; por la muestra y el ciclo se repite. Si
+por el contrario <i>i</i> es igual o mayor que <i>imax</i> el programa se
+detiene. En resumen se mide la dependencia del voltaje
+Hall en funci&oacute;n de la corriente aplicada desde -<i>imax</i> hasta
++<i>imax</i> en incrementos &Delta;<i>i</i>, para un campo magn&eacute;tico y una
+temperatura determinados.</p>
+
+<p>En el presente trabajo se caracterizaron muestras met&aacute;licas
+y semiconductoras cristalinas dopadas de constante hall
+<i>R<sub>H</sub></i> conocida, con la idea central de medir la constante Hall
+en muestras patrones, cuyos valores permiten probar la
+confiabilidad de las mediciones que se hagan con este
+sistema. Como muestras se han utilizado: una l&aacute;mina de
+cobre Phywe 11803.00 y una l&aacute;mina de zinc Phywe
+11804.01. La <a href="#tab1">Tabla 1</a> muestra los instrumentos empleados
+para la medici&oacute;n de los par&aacute;metros f&iacute;sicos involucrados en
+el experimento y descritos en la <a href="#fig2">Figura 2</a>.</p>
+
+<p><center><a name="tab1"><img src="img/revistas/unsc/v13n2/v13n2a09t1.jpg"></center></p>
+
+<p>Para la supervisi&oacute;n y control se desarroll&oacute; una aplicaci&oacute;n
+para comunicaci&oacute;n de instrumentos basado en el software
+LabVIEW 6i. El panel frontal de dicha aplicaci&oacute;n se ilustra
+en la <a href="#fig4">Figura 4</a>.</p>
+
+<p><center><a name="fig4"><img src="img/revistas/unsc/v13n2/v13n2a09f4.jpg"></center></p>
+
+<p>Dicha aplicaci&oacute;n permite graficar y almacenar en archivo
+de texto los datos obtenidos por el amper&iacute;metro (I<sub>x</sub>) y el
+nanovolt&iacute;metro (U<sub>xy</sub>), siguiendo el protocolo descrito en
+la <a href="#fig3">Figura 3</a>, mediante un driver que maneja la comunicaci&oacute;n
+entre el PC y los instrumentos por medio de la tarjeta
+GPIB. Este programa se ejecuta despu&eacute;s que se ha medido
+manualmente el campo magn&eacute;tico en el lugar donde se
+localiza la muestra.</p>
+
+<p>La medici&oacute;n de la temperatura de la muestra y del voltaje
+longitudinal U<sub>xx</sub> (paralelo a la direcci&oacute;n de la corriente)
+para determinar simult&aacute;neamente la resistividad de la muestra
+por el m&eacute;todo de 4 sondas, son efectuadas por el computador
+mismo usando m&oacute;dulos de acondicionamiento de
+se&ntilde;al y conversores de se&ntilde;al an&aacute;logo-digital que son obtenidas
+a trav&eacute;s de una tarjeta de adquisici&oacute;n de datos DAQ.
+Tanto el software LabVIEW como el hardware fueron fabricados
+por National Instruments.</p>
+
+<p><font size="3"><b>EFECTO HALL EN METALES</b></font></p>
+
+<p>Para discutir los resultados de efecto Hall en metales, en
+primer lugar es conveniente mencionar qu&eacute; se entiende
+por un metal desde el punto de vista f&iacute;sico. Una primera
+aproximaci&oacute;n para la explicaci&oacute;n de un metal corresponde
+al modelo de Drude (Ashcroft and Mermin, 1976; Singh
+1993). Este modelo se fundamenta en el modelo at&oacute;mico
+de Rutherford. Seg&uacute;n este modelo, el &aacute;tomo est&aacute; constituido
+por un n&uacute;cleo cargado positivamente y una corteza
+electr&oacute;nica cargada negativamente, los electrones que all&iacute;
+se encuentran est&aacute;n girando alrededor del n&uacute;cleo en &oacute;rbitas
+circulares de forma an&aacute;loga al sistema planetario. Los
+electrones pertenecientes a las &oacute;rbitas m&aacute;s pr&oacute;ximas al
+n&uacute;cleo est&aacute;n fuertemente ligados al mismo; sin embargo,
+aquellos electrones orbitando en trayectorias mucho m&aacute;s
+lejanas (electrones de valencia) estar&aacute;n d&eacute;bilmente ligados,
+ello debido al apantallamiento el&eacute;ctrico de los electrones
+de las &oacute;rbitas internas. De esta suerte, los electrones
+de valencia pueden moverse con cierta facilidad a trav&eacute;s
+de la red conformada por los iones (<a href="#fig5">Fig. 5a</a>), formando un
+"gas de electrones" que es el responsable de las propiedades
+el&eacute;ctricas, &oacute;pticas, t&eacute;rmicas e incluso mec&aacute;nicas de los
+metales.</p>
+
+<p><center><a name="fig5"><img src="img/revistas/unsc/v13n2/v13n2a09f5.jpg"></center></p>
+
+<p>Un modelo m&aacute;s refinado para el estudio de los metales
+corresponde al estudio de la mec&aacute;nica cu&aacute;ntica aplicada a
+los s&oacute;lidos (Kittel, 1996; Blakemore 1969). Seg&uacute;n la teor&iacute;a
+cu&aacute;ntica, los electrones tienen un comportamiento dual
+de onda o de part&iacute;cula, entonces un electr&oacute;n que se mueve
+en un s&oacute;lido puede verse ahora como una onda que se
+mueve a trav&eacute;s de una red conformada por los diferentes
+iones del metal. Como resultado de la interacci&oacute;n de los
+electrones con el potencial de los iones aparece una estructura
+de bandas, es decir, un conjunto de niveles energ&eacute;ticos
+permitidos y prohibidos para los electrones. Se
+tiene un metal cuando el nivel de Fermi, nivel que separa
+estados electr&oacute;nicos ocupados de niveles desocupados, se
+encuentra en medio de una banda (<a href="#fig5">Figura 5b</a>). Es decir,
+cuando una banda electr&oacute;nica est&aacute; parcialmente llena.</p>
+
+<p><font size="3"><b>RESULTADOS Y DISCUSI&Oacute;N</b></font></p>
+
+<p>En la <a href="#fig6">figura 6</a> se ilustran mediciones de efecto Hall a temperatura
+ambiente para una muestra de cobre. La l&aacute;mina
+tiene un espesor de 18 ìm y a trav&eacute;s de ella circula una
+corriente constante de 12 A.</p>
+
+<p><center><a name="fig6"><img src="img/revistas/unsc/v13n2/v13n2a09f6.jpg"></center></p>
+
+<p>Aqu&iacute; se estudia la dependencia del voltaje Hall <i>U<sub>H</sub></i> en funci&oacute;n
+del campo magn&eacute;tico a temperatura ambiente
+(T=300K). De esta gr&aacute;fica se ve que existe una dependencia
+lineal entre el voltaje Hall y el campo magn&eacute;tico, mediante
+una regresi&oacute;n lineal se obtiene la pendiente de la
+recta y de aqu&iacute; se obtiene el coeficiente Hall R<sub>H</sub> = -
+(0.28 &plusmn; 0.01)×10<sup>-10</sup> m<sup>3</sup>/C. El valor reportado en la literatura
+es R<sub>H</sub> = - 0.536 x 10<sup>-10</sup> m<sup>3</sup>/C (Stoecker, 1998). Vale la
+pena resaltar que el valor medido coincide en el orden de
+magnitud con el valor reportado en la literatura, lo cual
+ilustra la confiabilidad del sistema de medici&oacute;n.</p>
+
+<p>A partir de esta constante se pueden evaluar ciertos
+par&aacute;metros de importancia, por ejemplo el signo negativo
+significa que el tipo de portador mayoritario para el cobre
+son electrones. La concentraci&oacute;n de portadores <i>&eta;</i> =1/<i>q R<sub>H</sub></i>
+obtenida para este elemento es 2.22 x 10<sup>22</sup> electrones/cm<sup>3</sup>,
+que como es de esperar es del orden de magnitud del n&uacute;mero
+de Avogadro. El valor te&oacute;rico para la concentraci&oacute;n
+de portadores asumiendo una estructura compacta tipo FCC
+(c&uacute;bica centrada en las caras) con 4 electrones de valencia
+por celda unitaria de arista <i>a</i> = 4.10 &Aring; (Stoecker, 1998) da
+como resultado una concentraci&oacute;n de <i>&eta;</i> = 4/<i>a</i>3 <img src="img/revistas/unsc/v13n2/v13n2a09img7.jpg"> 5.8 x 10<sup>22</sup>
+electrones/cm<sup>3</sup>, valor muy cercano al obtenido experimentalmente.
+En el presente trabajo se obtiene aproximadamente
+0.38 electrones libres por &aacute;tomo, el cual es un valor
+bastante aceptable teniendo en cuenta que la configuraci&oacute;n
+electr&oacute;nica para el cobre es &#91;Ar&#93;3d<sup>10</sup>4s<sup>1</sup>, es decir, un
+electr&oacute;n libre por &aacute;tomo.</p>
+
+<p>Adicionalmente, se midi&oacute; la dependencia del voltaje Hall
+con el campo magn&eacute;tico para esta muestra a temperaturas
+entre 300K y 450K. Sin embargo, no se presenta ninguna
+variaci&oacute;n en la constante Hall, esto quiere decir que la
+concentraci&oacute;n de portadores es independiente de la temperatura.
+Este resultado est&aacute; en concordancia con los modelos
+de los metales anteriormente discutidos. El
+incremento en la temperatura modifica &uacute;nicamente la energ&iacute;a
+cin&eacute;tica promedio de los portadores pero su concentraci&oacute;n
+permanece invariable.</p>
+
+<p>Mediciones de efecto Hall tambi&eacute;n fueron realizadas en
+una muestra met&aacute;lica de zinc de 25 µm de espesor. A trav&eacute;s
+de la muestra de zinc circula una corriente de 12 A y se
+determina la variaci&oacute;n del voltaje Hall con el campo magn&eacute;tico
+que var&iacute;a desde -300 mT hasta 400 mT. El resultado
+se muestra en la <a href="#fig7">Figura 7</a>.
+
+<p><center><a name="fig7"><img src="img/revistas/unsc/v13n2/v13n2a09f7.jpg"></center></p>
+
+<p>Para esta muestra tambi&eacute;n se observa una dependencia lineal
+entre el voltaje Hall y el campo magn&eacute;tico aplicado.
+El coeficiente Hall obtenido es R<sub>H</sub> = + (4.2 &plusmn; 0.2)×10<sup>-11</sup> m<sup>3</sup>/
+C. La literatura reporta un valor de R<sub>H</sub> = + 10.4 x 10<sup>-11</sup> m<sup>3</sup>/
+C (Stoecker, 1998). El valor medido con el sistema es bastante
+bueno, hay una concordancia con el orden de magnitud;
+sin embargo, la discrepancia que se presenta puede
+atribuirse a varias causas. Entre ellas por ejemplo la pureza
+del material, puntos de contacto y tambi&eacute;n otros efectos
+m&aacute;s complejos como fen&oacute;menos galvanom&eacute;tricos, efecto
+Seebeck, Nerst, termovoltajes, etc.</p>
+
+<p>Es importante notar que a diferencia del cobre, para el Zinc
+se obtuvo un coeficiente Hall positivo. De acuerdo con el
+modelo de Drude, esto indicar&iacute;a que el tipo de portador
+para esta muestra son huecos, interpretaci&oacute;n un tanto extra&ntilde;a
+si se tiene en cuenta que los portadores en metales
+son electrones, con carga intr&iacute;nsecamente negativa. Para
+discutir esta cuesti&oacute;n acerca del tipo de portadores se debe
+considerar la configuraci&oacute;n electr&oacute;nica de ambos metales.
+Para cobre es claro que el mecanismo de conducci&oacute;n se
+basa en portadores de carga negativos y en total acuerdo
+con los conceptos del modelo de gas de electrones libres.
+Para el Zinc la configuraci&oacute;n electr&oacute;nica es &#91;Ar&#93;3d<sup>10</sup>4s<sup>2</sup>,
+debido a esto su orbital s est&aacute; totalmente ocupado por
+electrones y en consecuencia deber&iacute;a ser un aislante. Sin
+embargo, desde el punto de vista de la estructura de bandas
+ocurre un sobrelapamiento entre la banda vac&iacute;a (n+1)p
+y la banda llena ns, y como consecuencia los electrones
+m&aacute;s energ&eacute;ticos de la banda 4s tienen disponibles los estados
+menos energ&eacute;ticos de la banda 5p. Este tipo de elementos
+cuyos &aacute;tomos tienen capas completas pero que a
+pesar de ello son conductores debido a sobrelapamiento
+entre bandas son llamados semi-metales (Blakemore, 1969;
+Ashcroft and Mermin, 1976).</p>
+
+<p>Teniendo en cuenta la estructura de bandas se debe analizar
+el movimiento de los portadores en presencia de un
+campo magn&eacute;tico. De la f&iacute;sica del estado s&oacute;lido se sabe
+que a T=0K el nivel de Fermi marca el l&iacute;mite de los estados
+ocupados, los cuales energ&eacute;ticamente var&iacute;an seg&uacute;n la direcci&oacute;n
+dependiendo de la estructura cristalina del s&oacute;lido.
+Esto determina la forma de la superficie de Fermi, la cual es
+decisiva para las propiedades de muchos metales. La forma
+de las superficies de Fermi para algunos metales se
+muestra en la <a href="#fig8">Figura 8</a>, junto con su respectiva zona de
+Brillouin, la cual est&aacute; estrechamente relacionada con la
+estructura cristalina del metal.</p>
+
+<p><center><a name="fig8"><img src="img/revistas/unsc/v13n2/v13n2a09f8.jpg"></center></p>
+
+<p>La forma m&aacute;s simple de la superficie de Fermi es una esfera
+(<a href="#fig8">Figura 8a</a>) y corresponde de una manera aproximada al caso
+de &aacute;tomos monovalentes (metales alcalinos como Li, Na, K),
+lo cual se asemeja al caso de un gas de electrones libres cuya
+esfera de Fermi est&aacute; encerrada dentro de la primera zona de
+Brillouin (1&ordf; ZB). Cuando se incrementa el n&uacute;mero de electrones
+de valencia por celda unitaria el radio de la superficie
+de Fermi tambi&eacute;n se incrementa y puede incluso llegar a tocar
+las fronteras de la 1&ordf; ZB. Para metales trivalentes y tetravalentes
+la superficie de Fermi puede extenderse hasta la segunda e
+incluso tercera zona de Brillouin o m&aacute;s all&aacute;. Si se considera el
+esquema de zona reducida (<a href="#fig9">Fig. 9a</a>) es f&aacute;cil darse cuenta que
+mientras la primera ZB est&aacute; completamente llena, la segunda
+y la tercera est&aacute;n parcialmente llenas. Incluso en un esquema
+de zona peri&oacute;dica puede observarse que la segunda ZB est&aacute;
+casi llena y que la tercera tiene la forma de rosetas peri&oacute;dicas
+(Blakemore, 1969; Kittel, 1996).</p>
+
+<p><center><a name="fig9"><img src="img/revistas/unsc/v13n2/v13n2a09f9.jpg"></center></p>
+
+<p>La importancia de estas superficies de Fermi para el transporte
+electr&oacute;nico radica en que en la representaci&oacute;n cu&aacute;ntica
+del electr&oacute;n, interactuando como una onda que se propaga
+a trav&eacute;s de un cristal peri&oacute;dico, la <i>velocidad de un electr&oacute;n
+con energ&iacute;a &aring; en un cristal real corresponde a la velocidad
+de grupo &iacute;<sub>g</sub></i>de un paquete de ondas con vector de onda
+cercano a <img src="img/revistas/unsc/v13n2/v13n2a09img8.jpg">(Blakemore, 1969). Dicha velocidad de grupo
+est&aacute; dada por:</p>
+
+<p><center><img src="img/revistas/unsc/v13n2/v13n2a09for2.jpg"></center></p>
+
+<p>De acuerdo con esta ecuaci&oacute;n, el movimiento del electr&oacute;n
+se efect&uacute;a en direcci&oacute;n perpendicular a la superficie de
+Fermi de energ&iacute;a <i>&aring;</i>. Otra forma de representar este movimiento
+del electr&oacute;n en un cristal es asociando una masa
+efectiva al electr&oacute;n, la cual en general es un tensor que
+depende de la concavidad de la superficie de Fermi y que
+est&aacute; definido como:</p>
+
+<p><center><img src="img/revistas/unsc/v13n2/v13n2a09for3.jpg"></center></p>
+
+<p>En algunos s&oacute;lidos con estructura cristalina muy compleja,
+las componentes fuera de la diagonal de este tensor son
+muy grandes y el campo el&eacute;ctrico aplicado en una direcci&oacute;n
+produce una aceleraci&oacute;n en otra diferente direcci&oacute;n.
+Esto sucede para superficies de Fermi que son marcadamente
+no-esf&eacute;ricas, d&aacute;ndose incluso el caso de que el tensor
+de masa efectiva tenga componentes positivas en algunas
+direcciones, mientras que posee componentes negativas
+en otras. Un ejemplo de esto se muestra en el "cuello" de la
+superficie de Fermi para el cobre que intersecta la 1&ordf; ZB
+(<a href="#fig10">Figura 10</a>).</p>
+
+<p><center><a name="fig10"><img src="img/revistas/unsc/v13n2/v13n2a09f10.jpg"></center></p>
+
+<p>Para estados de energ&iacute;a en el borde de ZB, la masa efectiva
+es positiva en las direcciones de k<sub>b</sub> y k<sub>c</sub>, pero negativa en la
+direcci&oacute;n k<sub>a</sub> perpendicular al plano de la frontera. Ahora
+bien, teniendo en cuenta la expresi&oacute;n para la fuerza de
+Lorentz, que describe el movimiento de un electr&oacute;n en
+presencia de un campo magn&eacute;tico, se tiene que los electrones
+se mueven en curvas de energ&iacute;a constante en un plano
+que es perpendicular a <img src="img/revistas/unsc/v13n2/v13n2a09img4.jpg">.</p>
+
+<p><center><img src="img/revistas/unsc/v13n2/v13n2a09for4.jpg"></center></p>
+
+<p>Dependiendo tanto de la forma de la superficie de Fermi en
+el esquema de zona reducida como de la zona de Brillouin,
+el vectors <img src="img/revistas/unsc/v13n2/v13n2a09img9.jpg"><i><sub>k</sub> &epsilon;</i> e incrementa hacia el exterior de la figura o
+hacia el interior de la figura. Seg&uacute;n sea la direcci&oacute;n de este
+vector, los electrones se mueven en &oacute;rbitas de electrones,
+&oacute;rbitas de huecos o en una combinaci&oacute;n de las dos.</p>
+
+<p><font size="3"><b>CONCLUSIONES</b></font></p>
+
+<p>Se implement&oacute; un sistema de supervisi&oacute;n y control para
+medir el efecto Hall en metales y semiconductores. Mediante
+el uso del PC y el programa especializado LabVIEW,
+el computador puede controlar instrumentos de medici&oacute;n
+por medio de la interface IEEE-488. Las mediciones hechas
+con este sistema en metales y semiconductores dopados
+han mostrado una excelente concordancia con resultados
+previos reportados en la literatura, demostrando una
+confiabilidad en los instrumentos de medici&oacute;n y del sistema
+de automatizaci&oacute;n. Por lo tanto, este sistema de medici&oacute;n
+puede utilizarse para la caracterizaci&oacute;n el&eacute;ctrica de
+muestras tales como pel&iacute;culas semiconductoras y met&aacute;licas
+que se producen en el Grupo de Pel&iacute;culas Delgadas del
+Departamento de F&iacute;sica. La implementaci&oacute;n de esta t&eacute;cnica
+de efecto Hall le permitir&aacute; al grupo contar con una herramienta
+importante para la caracterizaci&oacute;n el&eacute;ctrica de
+estas pel&iacute;culas. Al mismo tiempo permite ofrecer un servicio
+de caracterizaci&oacute;n a grupos de investigaci&oacute;n que trabajan en disciplinas afines, esto incentiva la interacci&oacute;n y
+cooperaci&oacute;n con estos grupos.</p>
+
+<p><font size="3"><b>AGRADECIMIENTOS</b></font></p>
+
+<p>A la Vicerrector&iacute;a Acad&eacute;mica de la Pontificia Universidad
+Javeriana que financi&oacute; tanto la compra de los equipos como
+el tiempo de dedicaci&oacute;n de los profesores al proyecto y al
+profesor H. M&eacute;ndez por sus valiosos comentarios.</p>
+
+<hr>
+
+<p><font size="3"><b>LITERATURA CITADA</b></font></p>
+
+<p>ASHCROFT, N.W. y MERMIN, N.D. <i>Solid State Physics</i>, first
+edition. Saunders College Publishing. Philadelphia,
+USA. 1976.</p>
+
+<p>BLAKEMORE, J.S. <i>Solid State Physics</i>, first edition. Saunders
+College Publishing. Philadelphia, USA. 1969.</p>
+
+<p>HARRISON, W.A. Band Structure of Aluminum, <i>Phys. Rev</i>.
+1960, 118, 1182.</p>
+
+<p>KITTEL, CH. <i>Introduction to Solid State Physics</i>. 7a edici&oacute;n.
+John Wiley & Sons. 1996.</p>
+
+<p>PIERRET, R. <i>Fundamentos de semiconductores</i>. 1&ordf; edici&oacute;n
+en espa&ntilde;ol. Addison-Wesley Iberoamericana. Wilmington,
+USA. 1994.</p>
+
+<p>SINGH, J. <i>Physics of semiconductors and their heterostructures</i>,
+first edition. McGraw-Hill Book Co. Singapore.
+1993.</p>
+
+<p>STOECKER, H. <i>Taschenbuch der Physik</i>. Verlag Harri Deutsch,
+1998.</p>
+
+<p>STREETMAN, B.G. y BANERJEE, S.K., <i>Solid State Electronic
+Devices</i>, 6a edici&oacute;n. Prentice Hall, 2006.</p>
+
+</font>
+</body>
+</html>
