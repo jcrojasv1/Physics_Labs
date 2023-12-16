@@ -3,7 +3,8 @@ Code for calculations and utilities made in Physics laboratory courses at Univer
 The courses mentioned below have been taken:
 
 - [Modern Physics Laboratory](https://github.com/jcrojasv1/Physics_Labs/tree/main/Modern_Phy_Lab).
-- [Waves and Fluids Laboratory](https://github.com/jcrojasv1/Physics_Labs/tree/main/Waves_and_Fluids_Lab)
+- [Waves and Fluids Laboratory](https://github.com/jcrojasv1/Physics_Labs/tree/main/Waves_and_Fluids_Lab).
+- [Electronics for Sciences] (URL to be set).
 
 
 
