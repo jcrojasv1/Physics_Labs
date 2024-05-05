@@ -22,7 +22,6 @@ LiquidLine line01(1, 1, "            >>");
 LiquidLine line1(1, 0, "1. Radio FM.");
 LiquidLine line2(1, 1, "2. Time.");
 LiquidLine line3(1, 0, "3. Temperature.");
-LiquidLine line4(1, 1, "4. Bluethoot.");
 LiquidLine line5(0, 0, "Frequency:");
 LiquidLine line7(1, 1, "Return to menu.");
 LiquidLine line8(0, 0, "Use the buttons:");
@@ -61,7 +60,6 @@ void setup() {
   screen1.add_line(line1);
   screen1.add_line(line2);
   screen1.add_line(line3);
-  screen1.add_line(line4);
   screen2.add_line(line5);
   screen2.add_line(line6);
   screen2.add_line(line7);
@@ -69,7 +67,6 @@ void setup() {
   line1.set_focusPosition(Position::LEFT);
   line2.set_focusPosition(Position::LEFT);
   line3.set_focusPosition(Position::LEFT);
-  line4.set_focusPosition(Position::LEFT);
   line6.set_focusPosition(Position::LEFT);
   line7.set_focusPosition(Position::LEFT);
 
@@ -78,7 +75,6 @@ void setup() {
   line1.attach_function(1, Radio);
   line2.attach_function(1, Time);
   line3.attach_function(1, Temperature);
-  line4.attach_function(1, Bluethooth);
   line5.attach_function(1, voided);
   line6.attach_function(1, voided);
   line7.attach_function(1, Back);
@@ -239,10 +235,6 @@ void Time(bool ON){
   }
 
   menu.change_screen(2);
-}
-
-void Bluethooth(){
-
 }
 
 void Next(){
